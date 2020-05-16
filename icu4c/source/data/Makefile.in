@@ -177,6 +177,9 @@ ifneq ($(ICUDATA_SOURCE_IS_NATIVE_TARGET),YES)
 else
 	$(INSTALL_DATA) $(ICUDATA_SOURCE_ARCHIVE) $(OUTDIR)
 endif
+ifeq ($(PKGDATA_MODE),common)
+	$(INVOKE) $(TOOLBINDIR)/icupkg -t$(ICUDATA_CHAR) $(ICUPKGDATA_OUTDIR)/$(ICUDATA_NAME).dat
+endif
 	echo timestamp > $@
 
 ## Install ICU data.
@@ -213,6 +216,10 @@ else
 endif
 else
 	$(INSTALL_DATA) $(ICUDATA_SOURCE_ARCHIVE) $(DESTDIR)$(ICUPKGDATA_DIR)
+endif
+ifeq ($(PKGDATA_MODE),common)
+	$(INVOKE) $(TOOLBINDIR)/icupkg -t$(ICUDATA_CHAR) $(ICUPKGDATA_OUTDIR)/$(ICUDATA_NAME).dat
+	$(INVOKE) $(TOOLBINDIR)/icupkg -t$(ICUDATA_CHAR) $(ICUPKGDATA_INSTALL_DIR)/$(ICUDATA_NAME).dat
 endif
 
 
