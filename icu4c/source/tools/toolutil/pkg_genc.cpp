@@ -743,6 +743,9 @@ getOutFilename(
 }
 
 #ifdef CAN_GENERATE_OBJECTS
+#ifdef __CHERI_PURE_CAPABILITY__
+#error "CAN_GENERATE_OBJECTS should not be set for CHERI cross-build"
+#endif
 static void
 getArchitecture(uint16_t *pCPU, uint16_t *pBits, UBool *pIsBigEndian, const char *optMatchArch) {
     union {
@@ -847,7 +850,6 @@ getArchitecture(uint16_t *pCPU, uint16_t *pBits, UBool *pIsBigEndian, const char
     if(*pIsBigEndian!=U_IS_BIG_ENDIAN) {
         fprintf(stderr, "genccode: currently only same-endianness ELF formats are supported\n");
         exit(U_UNSUPPORTED_ERROR);
-#error "CAN_GENERATE_OBJECTS should not be set for CHERI cross-build"
     }
     /* TODO: Support byte swapping */
 
